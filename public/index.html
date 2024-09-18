@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One-to-One Chat App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.min.js"></script>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div id="chatContainer" class="row no-gutters">
+            <div id="userPanel" class="col-md-3 p-2 border-right">
+                <h5 class="text-center">Users</h5>
+                <ul id="userList" class="list-group"></ul>
+            </div>
+            <div id="chatPanel" class="col-md-9 p-2 d-flex flex-column">
+                <div id="chatHeader" class="d-flex justify-content-between align-items-center p-2 border-bottom">
+                    <h5 id="chatWith">Select a user to start chat</h5>
+                </div>
+                <div id="messages" class="flex-grow-1 overflow-auto p-2 border-bottom"></div>
+                <div class="input-group mt-2">
+                    <input type="text" id="messageInput" class="form-control" placeholder="Type a message">
+                    <div class="input-group-append">
+                        <button id="sendButton" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+                <emoji-picker></emoji-picker>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
