@@ -1,10 +1,11 @@
 /* Base Styles */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f4f9f4; /* Light green background */
-    color: #333; /* Dark text color for contrast */
+    background-color: #f0f5f1; /* Softer light green background */
+    color: #333; /* Dark text color */
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .container-fluid {
@@ -15,132 +16,165 @@ body {
     height: 100%;
     display: flex;
     flex-direction: row;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* User Panel Styles */
 #userPanel {
-    background-color: #eaf4e4; /* Light green for user list panel */
-    border-right: 1px solid #d0e5d0;
-    overflow-y: auto;
-    height: 100%;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    color: #333;
+    background-color: #e0f0e0; /* Lighter green */
+    border-right: 1px solid #c4e6c4;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100vh; /* Limit height to full view height */
+    width: 300px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 #userPanel h5 {
+    font-weight: bold;
     color: #333;
-    background-color: #c8e6c9; /* Slightly darker green */
-    border: none;
-    color: #333;
+    background-color: #a8d9a8; /* Slightly darker green */
+    padding: 15px;
     border-radius: 8px;
-    margin: 5px 0;
-    padding: 10px;
-    transition: background-color 0.3s ease;
+    text-align: center;
 }
 
 #userList .list-group-item {
-    background-color: #c8e6c9; /* Green background for list items */
+    background-color: #c8e6c9; /* Softer green */
     border: none;
-    color: #333;
     border-radius: 8px;
-    margin: 5px 0;
-    padding: 10px;
-    transition: background-color 0.3s ease;
+    margin: 5px 10px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 #userList .list-group-item:hover {
-    background-color: #a5d6a7; /* Lighter green on hover */
+    background-color: #9ed99e;
+    transform: scale(1.05); /* Add subtle zoom on hover */
 }
 
+.user-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 2px solid #66bb6a;
+    transition: transform 0.3s ease;
+}
+
+.user-pic:hover {
+    transform: rotate(360deg); /* Fun rotation effect on hover */
+}
+
+/* Chat Panel Styles */
 #chatPanel {
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-color: #f4f9f4; /* Light green for chat panel */
+    background-color: #f5faf5; /* Softer green */
 }
 
 #chatHeader {
-    background-color: #c8e6c9; /* Darker green header */
-    border-bottom: 1px solid #a5d6a7;
-    padding: 10px;
-    color: #333;
+    background-color: #c2e1c2; /* Subtle green gradient */
+    padding: 10px 20px;
+    border-bottom: 1px solid #b5d6b5;
     font-weight: bold;
     display: flex;
-    border-radius: 8px;
     align-items: center;
     justify-content: space-between;
+    border-radius: 8px;
 }
 
+/* Messages Styles */
 #messages {
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: #f4f9f4; /* Match body background */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px;
     flex: 1;
+    background-image: url(chat-background.png);
+    background-size: cover;
+    background-position: center;
+    max-height: calc(100vh - 100px); /* Adjust height to account for header and input area */
 }
 
 .message-item {
+    display: flex;
+    align-items: flex-start;
     max-width: 70%;
     padding: 12px 18px;
-    border-radius: 20px; /* Round edges */
+    border-radius: 20px;
     margin-bottom: 12px;
     position: relative;
     font-size: 0.9rem;
     line-height: 1.4;
-    background-color: #e0f2f1; /* Light green background for received messages */
-    border: 1px solid #b9fbc0;
-    color: #333; /* Dark text color for contrast */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Gradient effect for sent messages */
+/* Sent Message Styling */
 .message-item.sent {
-    background: linear-gradient(135deg, #66bb6a, #43a047); /* Gradient effect */
+    background: linear-gradient(135deg, #66bb6a, #43a047);
     margin-left: auto;
-    color: #fff; /* White text color for better readability */
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Darker color for received messages */
 .message-item.received {
-    background-color: #e0f2f1; /* Light green color for received messages */
+    background-color: #e0f2f1;
     margin-right: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Input Group Styles */
+.message-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+/* Input Area Styles */
 .input-group {
-    background-color: #f4f9f4;
-    border-top: 1px solid #d0e5d0;
+    background-color: #f5faf5;
+    border-top: 1px solid #c4e6c4;
     padding: 10px;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    display: flex;
     align-items: center;
-    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1); /* Inset shadow for input area */
 }
 
 #messageInput {
+    flex: 1;
     border-radius: 20px;
     border: 1px solid #b9fbc0;
-    padding: 10px;
+    padding: 12px;
     margin-right: 10px;
     background-color: #eaf4e4;
     color: #333;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #messageInput:focus {
-    background-color: #c8e6c9;
+    background-color: #d6ebd6;
+    box-shadow: 0px 0px 10px rgba(102, 187, 106, 0.5);
     outline: none;
 }
 
 #sendButton {
-    border-radius: 20px;
+    border-radius: 50px;
     padding: 10px 20px;
     background-color: #66bb6a;
     border: none;
     color: white;
+    font-weight: bold;
     transition: background-color 0.3s ease, transform 0.2s ease;
     cursor: pointer;
 }
 
 #sendButton:hover {
     background-color: #43a047;
+    transform: scale(1.1); /* Slight zoom effect on hover */
 }
 
 #sendButton:active {
@@ -151,61 +185,56 @@ body {
 emoji-picker {
     display: block;
     margin-top: 10px;
-    --emoji-picker-background: #eaf4e4; /* Light green background for the picker */
-    --emoji-picker-icon-color: #333; /* Dark icon color */
-    --emoji-picker-search-background: #c8e6c9; /* Slightly darker green for search */
-    --emoji-picker-search-text-color: #333; /* Dark text color for search */
+    --emoji-picker-background: #eaf4e4;
+    --emoji-picker-icon-color: #333;
+    --emoji-picker-search-background: #c8e6c9;
+    --emoji-picker-search-text-color: #333;
 }
 
-/* Message Styles */
-.message-item {
-    max-width: 70%;
-    padding: 10px;
-    border-radius: 20px; /* Round edges */
-    margin-bottom: 10px;
+/* Advanced Dropdown Menu */
+.menu {
     position: relative;
-    font-size: 0.9rem;
-    line-height: 1.4;
-    background-color: #e0f2f1; /* Light green background for received messages */
-    border: 1px solid #b9fbc0;
-    color: #333; /* Dark text color for contrast */
 }
 
-/* Gradient effect for sent messages */
-.message-item.sent {
-    background: linear-gradient(135deg, #66bb6a, #43a047); /* Gradient effect */
-    margin-left: auto;
-    color: #fff; /* White text color for better readability */
+#menuButton {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
-/* Darker color for received messages */
-.message-item.received {
-    background-color: #e0f2f1; /* Light green color for received messages */
-    margin-right: auto;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f1f1f1;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* Profile Picture Styles */
-.user-pic, .message-pic {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+.dropdown-content button {
+    width: 100%;
+    padding: 10px;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
 }
 
-#userList .list-group-item {
-    display: flex;
-    align-items: center;
+#menuButton:hover + .dropdown-content, .dropdown-content:hover {
+    display: block;
 }
 
-.message-item {
-    display: flex;
-    align-items: flex-start;
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
 }
 
-.message-item.sent {
-    justify-content: flex-end;
-}
-
-.message-item.received {
-    justify-content: flex-start;
+/* Add subtle hover effect */
+.message-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
