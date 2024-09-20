@@ -19,7 +19,6 @@ body {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* User Panel Styles */
 #userPanel {
     background-color: #e0f0e0; /* Lighter green */
     border-right: 1px solid #c4e6c4;
@@ -27,6 +26,8 @@ body {
     max-height: 100vh; /* Limit height to full view height */
     width: 300px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 #userPanel h5 {
@@ -36,6 +37,13 @@ body {
     padding: 15px;
     border-radius: 8px;
     text-align: center;
+}
+
+/* User List Scrollable */
+#userList {
+    flex-grow: 1;
+    overflow-y: auto; /* Allow list to scroll */
+    padding: 10px 0;
 }
 
 #userList .list-group-item {
@@ -97,6 +105,11 @@ body {
     background-size: cover;
     background-position: center;
     max-height: calc(100vh - 100px); /* Adjust height to account for header and input area */
+}
+
+.text-center{
+    border-radius: 10px;
+    border: none;
 }
 
 .message-item {
@@ -237,4 +250,25 @@ html {
 .message-item:hover {
     transform: scale(1.02);
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Profile Card CSS */
+#userProfileCard {
+    width: 300px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+#profilePicDisplay {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#profileUsername {
+    font-size: 20px;
+    font-weight: bold;
 }
