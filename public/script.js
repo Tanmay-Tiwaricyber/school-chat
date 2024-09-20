@@ -23,11 +23,16 @@ function getRandomProfilePic() {
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
+
     // Login
     const username = prompt("Enter your username:");
     const profilePic = getRandomProfilePic(); // Assign a random profile picture
     userProfilePics[socket.id] = profilePic; // Store your own profile pic
     socket.emit('login', { username, profilePic });
+
+    // Update profile card with user details (for current logged-in user)
+    document.getElementById('profilePicDisplay').src = profilePic;
+    document.getElementById('profileUsername').textContent = username;
 
     // Receive updated user list
     socket.on('userList', (users) => {
@@ -47,6 +52,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 li.addEventListener('click', () => {
                     currentRecipient = li.dataset.id;
                     document.getElementById('chatWith').textContent = `Chatting with ${users[id].username}`;
+                    applyChatAnimation(); // Trigger chat animation on user select
                 });
                 userList.appendChild(li);
             }
@@ -92,8 +98,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const message = messageInput.value;
         const emoji = selectedEmoji || ''; // Get selected emoji (if any)
         if (message && currentRecipient) {
-            socket.emit('sendMessage', { recipient: currentRecipient, message, emoji });
-            appendMessage(message, 'sent', socket.id); // Pass your socket ID as sender
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Get the timestamp
+            socket.emit('sendMessage', { recipient: currentRecipient, message, emoji, timestamp });
+            appendMessage(message + emoji, 'sent', socket.id, timestamp); // Pass your socket ID as sender
             messageInput.value = ''; // Clear message input
             selectedEmoji = ''; // Clear emoji selection
         } else {
@@ -102,8 +109,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 
     // Receive message
-    socket.on('receiveMessage', ({ message, from, emoji }) => {
-        appendMessage(message + emoji, 'received', from); // Use 'from' for correct sender profile picture
+    socket.on('receiveMessage', ({ message, from, emoji, timestamp }) => {
+        appendMessage(message + emoji, 'received', from, timestamp); // Use 'from' for correct sender profile picture
     });
 
     // Receive online status updates
@@ -114,8 +121,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-// Helper function to append messages to the chat window
-function appendMessage(message, type, sender) {
+// Helper function to append messages to the chat window with timestamp
+function appendMessage(message, type, sender, timestamp) {
     const messagesDiv = document.getElementById('messages');
     const div = document.createElement('div');
     div.className = `message-item ${type} d-flex align-items-start`;
@@ -127,17 +134,33 @@ function appendMessage(message, type, sender) {
         div.innerHTML = `
             <img src="${profilePic}" class="message-pic mr-2" alt="${sender}" />
             <div>
-                <strong>${sender}:</strong> ${message}
+                <strong>${sender}:</strong> ${message} <small class="text-muted ml-2">${timestamp}</small>
+                <button class="btn btn-sm btn-danger ml-2 delete-btn">Delete</button>
             </div>
         `;
     } else {
         div.innerHTML = `
             <img src="${profilePic}" class="message-pic mr-2" alt="You" />
             <div>
-                You: ${message}
+                You: ${message} <small class="text-muted ml-2">${timestamp}</small>
+                <button class="btn btn-sm btn-danger ml-2 delete-btn">Delete</button>
             </div>
         `;
     }
+
+    // Handle message deletion
+    div.querySelector('.delete-btn').addEventListener('click', () => {
+        messagesDiv.removeChild(div);
+        socket.emit('deleteMessage', { sender });
+    });
+
     messagesDiv.appendChild(div);
     messagesDiv.scrollTop = messagesDiv.scrollHeight; // Scroll to the bottom
+}
+
+// Function to apply chat animation when switching between users
+function applyChatAnimation() {
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.style.animation = 'none'; // Reset animation
+    setTimeout(() => messagesDiv.style.animation = 'fadeIn 0.5s ease-in-out', 10); // Apply fade-in animation
 }
