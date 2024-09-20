@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Chat App</title>
+    <title>One-to-One Chat App</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.min.js"></script>
     <link rel="stylesheet" href="/style.css">
@@ -11,10 +11,20 @@
 <body>
     <div class="container-fluid">
         <div id="chatContainer" class="row no-gutters">
-            <div id="userPanel" class="col-md-3 p-2 border-right">
+            <!-- User Profile Card Section -->
+            <div class="col-md-3 p-2 border-right">
+                <div id="userProfileCard" class="card mb-4">
+                    <div class="card-body text-center">
+                        <h4 id="" class="card-title mt-3">Your Profile</h4>
+                        <img id="profilePicDisplay" src="images/default.png" class="rounded-circle" alt="User Profile" width="100">
+                        <h4 id="profileUsername" class="card-title mt-3"></h4>
+                    </div>
+                </div>
+                <!-- User List Section -->
                 <h5 class="text-center">Users</h5>
                 <ul id="userList" class="list-group"></ul>
             </div>
+            <!-- Chat Panel Section -->
             <div id="chatPanel" class="col-md-9 p-2 d-flex flex-column">
                 <div id="chatHeader" class="d-flex justify-content-between align-items-center p-2 border-bottom">
                     <h5 id="chatWith">Select a user to start chat</h5>
@@ -30,6 +40,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
