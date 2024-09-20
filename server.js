@@ -25,10 +25,16 @@ io.on('connection', (socket) => {
         io.emit('userStatus', users); // Broadcast user status (online) to all clients
     });
 
-    // Handle message sending
+    // Handle message sending with timestamp
     socket.on('sendMessage', ({ recipient, message, emoji }) => {
+        const timestamp = new Date().toLocaleTimeString(); // Add a timestamp
         if (users[recipient]) {
-            io.to(recipient).emit('receiveMessage', { message, from: users[socket.id].username, emoji });
+            io.to(recipient).emit('receiveMessage', { 
+                message, 
+                from: users[socket.id].username, 
+                emoji, 
+                timestamp // Include timestamp in the message
+            });
         }
     });
 
@@ -43,6 +49,20 @@ io.on('connection', (socket) => {
     socket.on('stopTyping', ({ to }) => {
         if (users[to]) {
             io.to(to).emit('hideTyping');
+        }
+    });
+
+    // Handle clear chat request (front-end to handle removing UI elements)
+    socket.on('clearChat', ({ recipient }) => {
+        if (users[recipient]) {
+            io.to(recipient).emit('clearChatWindow'); // Emit clear chat event to recipient
+        }
+    });
+
+    // Handle message deletion (allow only the sender to delete their message)
+    socket.on('deleteMessage', ({ messageId, recipient }) => {
+        if (users[recipient]) {
+            io.to(recipient).emit('deleteMessage', { messageId });
         }
     });
 
